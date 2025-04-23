@@ -2,6 +2,7 @@ package com.harshvardhan.quality_app.service;
 
 
 import com.harshvardhan.quality_app.DTO.RegisterRequest;
+import com.harshvardhan.quality_app.DTO.UpdateUserDetails;
 import com.harshvardhan.quality_app.entity.Role;
 import com.harshvardhan.quality_app.entity.RoleName;
 import com.harshvardhan.quality_app.entity.User;
@@ -56,8 +57,45 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User upadateuserroles(Long Id, Set<String> rolename) {
+        User user = userRepository.findById(Id).orElseThrow(() -> new RuntimeException("User not found"));
+
+        Set<Role> roleSet = new HashSet<>();
+        for (String role : rolename) {
+            try {
+                RoleName roleName = RoleName.valueOf(role.toUpperCase());
+                Role roleRepositoryByName = roleRepository.findByName(roleName);
+                if (roleRepositoryByName == null) {
+                    throw new RuntimeException("User Role is not present in the data base: " + roleName);
+                }
+                roleSet.add(roleRepositoryByName);
+            }catch (IllegalArgumentException e){
+                throw new RuntimeException("Invalid Roles is specified:" + role);
+            }
+        }
+        user.setRoles(roleSet);
+        return userRepository.save(user);
+    }
+
     //By this services user can see all the user
     public List<User> getallusers() {
         return userRepository.findAll();
+    }
+
+    public User updateUserDetails(Long Id, UpdateUserDetails updateUserDetails){
+        User user = userRepository.findById(Id).orElseThrow(()->new RuntimeException("User is not found in the DB"));
+
+
+        if(updateUserDetails.getName()==null){
+            user.setName(updateUserDetails.getName());
+        }
+        if(updateUserDetails.getEmail()==null){
+            user.setEmail(updateUserDetails.getEmail());
+        }
+        if(updateUserDetails.getEmail()==null){
+            user.setPassword(updateUserDetails.getPassword());
+        }
+
+        return userRepository.save(user);
     }
 }
