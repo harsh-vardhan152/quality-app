@@ -17,11 +17,12 @@ public class Task {
     private Long id;
     private String title;
     private String description;
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @ManyToOne
     @JoinColumn(name = "assigned_user_id")
     private User assignedTo;
 
-    private String createrame;
+    private String creatername;
 }

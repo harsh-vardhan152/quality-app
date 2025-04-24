@@ -3,9 +3,11 @@ package com.harshvardhan.quality_app.entity;
 public enum Status {
 
     NEW,
-    PENDING_RESPONSE,
-    PENDING_APPROVAL,
-    APPROVED,
-    RESOLVED
+    IN_PROGRESS,
+    READY_FOR_TEST,
+    TESTING,
+    TESTED,
+    READY_TO_PUBLISH,
+    PUBLISHED
 
 }

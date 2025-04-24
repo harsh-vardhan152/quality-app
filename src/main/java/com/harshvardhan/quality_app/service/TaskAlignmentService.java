@@ -2,6 +2,7 @@ package com.harshvardhan.quality_app.service;
 
 import com.harshvardhan.quality_app.DTO.TaskRequest;
 import com.harshvardhan.quality_app.entity.RoleName;
+import com.harshvardhan.quality_app.entity.Status;
 import com.harshvardhan.quality_app.entity.Task;
 import com.harshvardhan.quality_app.entity.User;
 import com.harshvardhan.quality_app.repository.TaskRepository;
@@ -11,13 +12,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TaskAlignment {
+public class TaskAlignmentService {
 
     private final TaskRepository taskRepository;
 
     private final UserRepository userRepository;
 
-    public TaskAlignment(TaskRepository taskRepository, UserRepository userRepository) {
+    public TaskAlignmentService(TaskRepository taskRepository, UserRepository userRepository) {
         this.taskRepository = taskRepository;
         this.userRepository = userRepository;
     }
@@ -40,9 +41,9 @@ public class TaskAlignment {
         Task task = new Task();
         task.setTitle(request.getTitle());
         task.setDescription(request.getDescription());
-        task.setStatus("NEW");
+        task.setStatus(Status.NEW);
         task.setAssignedTo(user);
-        task.setCreaterame(request.getCreatername());
+        task.setCreatername(request.getCreatername());
 
         return taskRepository.save(task);
     }
