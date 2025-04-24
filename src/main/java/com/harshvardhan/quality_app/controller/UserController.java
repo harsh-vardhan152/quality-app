@@ -16,8 +16,11 @@ import java.util.Set;
 @RequestMapping("/api/auth")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public UserController(UserService service){
+        this.userService=service;
+    }
 
 
     @GetMapping("/users")

@@ -8,7 +8,6 @@ import com.harshvardhan.quality_app.entity.RoleName;
 import com.harshvardhan.quality_app.entity.User;
 import com.harshvardhan.quality_app.repository.RoleRepository;
 import com.harshvardhan.quality_app.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -18,11 +17,13 @@ import java.util.Set;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
-    @Autowired
-    private RoleRepository roleRepository;
+    public UserService(UserRepository userRepository, RoleRepository repository){
+        this.userRepository = userRepository;
+        this.roleRepository=repository;
+    }
 
 
     public User register(RegisterRequest registerRequest) {
@@ -77,7 +78,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    //By this services user can see all the user
+    //By this service the user can see all the user
     public List<User> getallusers() {
         return userRepository.findAll();
     }
