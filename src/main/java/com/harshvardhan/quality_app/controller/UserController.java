@@ -17,8 +17,8 @@ public class UserController {
 
     private final UserService userService;
 
-    public UserController(UserService service){
-        this.userService=service;
+    public UserController(UserService service) {
+        this.userService = service;
     }
 
 
@@ -43,7 +43,7 @@ public class UserController {
     }
 
     @DeleteMapping("/users/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable Long id ){
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return ResponseEntity.ok("Mentioned user is now deleted from the DB");
     }

@@ -20,9 +20,9 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
-    public UserService(UserRepository userRepository, RoleRepository repository){
+    public UserService(UserRepository userRepository, RoleRepository repository) {
         this.userRepository = userRepository;
-        this.roleRepository=repository;
+        this.roleRepository = repository;
     }
 
 
@@ -70,7 +70,7 @@ public class UserService {
                     throw new RuntimeException("User Role is not present in the data base: " + roleName);
                 }
                 roleSet.add(roleRepositoryByName);
-            }catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 throw new RuntimeException("Invalid Roles is specified:" + role);
             }
         }
@@ -83,24 +83,24 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User updateUserDetails(Long id, UpdateUserDetails updateUserDetails){
-        User user = userRepository.findById(id).orElseThrow(()->new RuntimeException("User is not found in the DB"));
+    public User updateUserDetails(Long id, UpdateUserDetails updateUserDetails) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User is not found in the DB"));
 
 
-        if(updateUserDetails.getName()==null){
+        if (updateUserDetails.getName() == null) {
             user.setName(updateUserDetails.getName());
         }
-        if(updateUserDetails.getEmail()==null){
+        if (updateUserDetails.getEmail() == null) {
             user.setEmail(updateUserDetails.getEmail());
         }
-        if(updateUserDetails.getEmail()==null){
+        if (updateUserDetails.getEmail() == null) {
             user.setPassword(updateUserDetails.getPassword());
         }
 
         return userRepository.save(user);
     }
-    
-    public void deleteUser(Long id){
+
+    public void deleteUser(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
         userRepository.delete(user);
     }
