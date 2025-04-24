@@ -4,7 +4,6 @@ import com.harshvardhan.quality_app.DTO.RegisterRequest;
 import com.harshvardhan.quality_app.DTO.UpdateUserDetails;
 import com.harshvardhan.quality_app.entity.User;
 import com.harshvardhan.quality_app.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +24,7 @@ public class UserController {
 
     @GetMapping("/users")
     public ResponseEntity<List<User>> getallusers() {
-        return ResponseEntity.ok(userService.getallusers());
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @PostMapping("/register")
@@ -35,7 +34,7 @@ public class UserController {
 
     @PutMapping("/users/{id}/roles")
     public ResponseEntity<User> updateUsersRole(@PathVariable Long id, @RequestBody Set<String> roles) {
-        return ResponseEntity.status(HttpStatus.OK).body(userService.upadateuserroles(id, roles));
+        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserRoles(id, roles));
     }
 
     @PutMapping("/users/{id}")

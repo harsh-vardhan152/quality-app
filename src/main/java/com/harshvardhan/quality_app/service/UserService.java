@@ -44,11 +44,11 @@ public class UserService {
             for (String role : registerRequest.getRoles()) {
                 try {
                     RoleName roleName = RoleName.valueOf(role.toUpperCase());
-                    Role DBRole = roleRepository.findByName(roleName);
-                    if (DBRole == null) {
+                    Role dbRole = roleRepository.findByName(roleName);
+                    if (dbRole == null) {
                         throw new RuntimeException("User Roles is not found in the Database " + roleName);
                     }
-                    roles.add(DBRole);
+                    roles.add(dbRole);
                 } catch (IllegalArgumentException e) {
                     throw new RuntimeException("Invalid Roles is specified:" + role);
                 }
@@ -58,8 +58,8 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User upadateuserroles(Long Id, Set<String> rolename) {
-        User user = userRepository.findById(Id).orElseThrow(() -> new RuntimeException("User not found"));
+    public User updateUserRoles(Long id, Set<String> rolename) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
 
         Set<Role> roleSet = new HashSet<>();
         for (String role : rolename) {
@@ -79,12 +79,12 @@ public class UserService {
     }
 
     //By this service the user can see all the user
-    public List<User> getallusers() {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    public User updateUserDetails(Long Id, UpdateUserDetails updateUserDetails){
-        User user = userRepository.findById(Id).orElseThrow(()->new RuntimeException("User is not found in the DB"));
+    public User updateUserDetails(Long id, UpdateUserDetails updateUserDetails){
+        User user = userRepository.findById(id).orElseThrow(()->new RuntimeException("User is not found in the DB"));
 
 
         if(updateUserDetails.getName()==null){
@@ -100,8 +100,9 @@ public class UserService {
         return userRepository.save(user);
     }
     
-    public void deleteUser(Long Id){
-        User user = userRepository.findById(Id).orElseThrow(() -> new RuntimeException("User not found"));
+    public void deleteUser(Long id){
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
         userRepository.delete(user);
     }
+
 }
