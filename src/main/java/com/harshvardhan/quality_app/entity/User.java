@@ -22,7 +22,7 @@ public class User {
     private String name;
     @Column(unique = true)
     private String email;
-    private  String password;
+    private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -31,7 +31,6 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
-
 
 
 }
