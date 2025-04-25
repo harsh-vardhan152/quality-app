@@ -13,7 +13,7 @@ class UserServiceTest {
     void StepUp() {
         testUser = new User();
         testUser.setId(1L);
-        testUser.setName("Test");
+        testUser.setUsername("Test");
         testUser.setEmail("test@gmail.com");
         testUser.setPassword("Test");
     }

@@ -6,6 +6,7 @@ import com.harshvardhan.quality_app.entity.User;
 import com.harshvardhan.quality_app.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class UserController {
         this.userService = service;
     }
 
-
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/users")
     public ResponseEntity<List<User>> getallusers() {
         return ResponseEntity.ok(userService.getAllUsers());
@@ -32,16 +33,22 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.register(registerRequest));
     }
 
+
+    @PreAuthorize("hasRole('DEVELOPER')")
     @PutMapping("/users/{id}/roles")
     public ResponseEntity<User> updateUsersRole(@PathVariable Long id, @RequestBody Set<String> roles) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserRoles(id, roles));
     }
 
+
+    @PreAuthorize("hasRole('DEVELOPER')")
     @PutMapping("/users/{id}")
     public ResponseEntity<User> updateUserDetails(@PathVariable Long id, @RequestBody UpdateUserDetails updateUserDetails) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserDetails(id, updateUserDetails));
     }
 
+
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/users/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);

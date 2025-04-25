@@ -14,5 +14,4 @@ public class SwaggerOverrideConfigImpl {
                 .title("Quality Tracker API")
                 .description("API documentation for Task and Role Management").version("1.0"));
     }
-
 }

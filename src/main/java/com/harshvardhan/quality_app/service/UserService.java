@@ -8,6 +8,7 @@ import com.harshvardhan.quality_app.entity.RoleName;
 import com.harshvardhan.quality_app.entity.User;
 import com.harshvardhan.quality_app.repository.RoleRepository;
 import com.harshvardhan.quality_app.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -20,18 +21,21 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
-    public UserService(UserRepository userRepository, RoleRepository repository) {
+    private final PasswordEncoder passwordEncoder;
+
+    public UserService(UserRepository userRepository, RoleRepository repository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = repository;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
     public User register(RegisterRequest registerRequest) {
 
         User user = new User();
-        user.setName(registerRequest.getName());
+        user.setUsername(registerRequest.getName());
         user.setEmail(registerRequest.getEmail());
-        user.setPassword(registerRequest.getPassword());
+        user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
 
         Set<Role> roles = new HashSet<>();
         if (registerRequest.getRoles() == null || registerRequest.getRoles().isEmpty()) {
@@ -87,8 +91,8 @@ public class UserService {
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User is not found in the DB"));
 
 
-        if (updateUserDetails.getName() == null) {
-            user.setName(updateUserDetails.getName());
+        if (updateUserDetails.getName() != null) {
+            user.setUsername(updateUserDetails.getName());
         }
         if (updateUserDetails.getEmail() == null) {
             user.setEmail(updateUserDetails.getEmail());
