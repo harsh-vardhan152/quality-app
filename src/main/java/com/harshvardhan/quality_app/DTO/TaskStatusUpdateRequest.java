@@ -12,6 +12,4 @@ public class TaskStatusUpdateRequest {
 
     private Status status;
     private Long userId;
-
-
 }
